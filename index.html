@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QED – a maths bot for Discord</title>
+<meta name="description" content="QED is a free Discord bot for mathematics: a symbolic calculator, LaTeX rendering and a daily university-level problem.">
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#000;--paper:#f6f6f4;--dim:#a9a9a5;--line:#2b2b2a;--panel:#0d0d0d;--serif:'Newsreader','Times New Roman',Georgia,serif;--sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;box-sizing:border-box;color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:#000}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--ink);color:var(--paper);font:400 1.0625rem/1.6 var(--sans)}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+header b{font:600 1.5rem var(--serif);letter-spacing:.02em}
+nav a{margin-left:24px;text-decoration:none;color:var(--dim)}
+nav a:hover,nav a:focus-visible{color:var(--paper)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding:56px 0 88px}
+.hero img{width:100%;height:auto;display:block;border-radius:2px}
+h1{font:400 clamp(2.6rem,6vw,4.6rem)/1.04 var(--serif);margin:0 0 24px;letter-spacing:-.015em}
+.lede{font:400 1.3rem/1.5 var(--serif);color:var(--dim);max-width:34em;margin:0 0 32px}
+.btn{display:inline-block;padding:13px 26px;background:var(--paper);color:#000;text-decoration:none;font-weight:500;border-radius:2px;margin-right:12px}
+.btn.ghost{background:none;color:var(--paper);border:1px solid var(--dim)}
+.btn:hover{background:#fff}.btn.ghost:hover{border-color:var(--paper)}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font:400 clamp(1.9rem,3.6vw,2.7rem)/1.1 var(--serif);margin:0 0 20px}
+.two{display:grid;grid-template-columns:1fr 1.2fr;gap:56px}
+p{margin:0 0 1em;max-width:38em}
+.dim{color:var(--dim)}
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:20px 22px;font-size:.98rem}
+.demo .cmd{color:var(--dim);margin:0 0 10px}
+.demo .cmd b{color:var(--paper);font-weight:500}
+.demo .res{font:400 1.5rem var(--serif);margin:0 0 16px}
+.demo hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.demo .ni{color:var(--dim);margin:0;font-size:.92rem}
+.tw{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:12px 16px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--paper);white-space:nowrap}
+td{color:var(--dim)}
+code{font:500 .95em ui-monospace,Menlo,Consolas,monospace;color:var(--paper)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:32px}
+.facts h3{font:600 1.3rem var(--serif);margin:0 0 8px}
+.facts p{color:var(--dim);margin:0}
+footer{border-top:1px solid var(--line);padding:40px 0 56px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:var(--dim)}
+footer a{margin-right:24px}
+@media(max-width:820px){.hero,.two,.facts{grid-template-columns:1fr}.hero{gap:32px;padding-top:24px}.hero img{order:-1;max-width:420px}nav a{margin-left:16px}}
+@media(prefers-reduced-motion:no-preference){.hero img{animation:in .9s ease both}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><b>QED</b><nav><a href="#commands">Commands</a><a href="#potd">Problem of the Day</a><a href="#contact">Contact</a></nav></header>
+
+<div class="hero">
+<div>
+<h1>Mathematics, worked out in your Discord server.</h1>
+<p class="lede">QED is a free bot that does the algebra and calculus, typesets your LaTeX, and posts a university-level problem every day.</p>
+<a class="btn" href="https://qed.ezhang.ca">Add QED to Discord</a><a class="btn ghost" href="#commands">See the commands</a>
+</div>
+<img src="logo.png" width="552" height="528" alt="QED logo: an integral sign curving around a magnifying glass that frames a capital sigma">
+</div>
+</div>
+
+<section id="commands"><div class="wrap">
+<div class="two">
+<div>
+<h2>A calculator that shows its working, and its limits.</h2>
+<p class="dim">Exact answers come first, typeset as an image, with the plain text underneath so you can copy it. Every calculation runs in an isolated process with a time and memory limit.</p>
+<p class="dim">When QED can’t establish a result, it says so. It never guesses.</p>
+</div>
+<div class="demo" aria-label="Example of a QED reply">
+<p class="cmd"><b>/integrate</b> expression: exp(-x^2) lower: -oo upper: oo</p>
+<p class="res">√π</p>
+<p class="ni">≈ 1.7724538509</p>
+<hr>
+<p class="cmd"><b>/limit</b> expression: 1/x point: 0</p>
+<p class="ni">The limit does not exist: from the left it is −∞, from the right +∞.</p>
+</div>
+</div>
+<div class="tw"><table>
+<tr><th><code>/simplify</code> <code>/factor</code> <code>/expand</code></th><td>Tidy up, factor over the rationals, or multiply out an expression.</td></tr>
+<tr><th><code>/diff</code> <code>/integrate</code> <code>/limit</code></th><td>Derivatives up to order 5, definite and indefinite integrals, one- and two-sided limits.</td></tr>
+<tr><th><code>/solve</code> <code>/evaluate</code></th><td>Solve equations over the reals or complex numbers; numeric values up to 50 digits.</td></tr>
+<tr><th><code>/matrix</code></th><td>Determinant, inverse, rank, rref, eigenvalues, and arithmetic. Results can be pasted back in to chain operations.</td></tr>
+<tr><th><code>/latex</code></th><td>Renders LaTeX maths, including matrices, as an image. Nothing is sent to a third-party service.</td></tr>
+</table></div>
+</div></section>
+
+<section id="potd"><div class="wrap">
+<h2>One real problem a day.</h2>
+<p class="dim">Pick a channel and a time, and QED posts a problem from analysis, algebra, number theory, combinatorics, topology and more. None of it is school-level.</p>
+<div class="facts">
+<div><h3>Private by default</h3><p>Hints, answer checking and solutions appear only to the person who clicked, so the channel never gets spoiled.</p></div>
+<div><h3>Graded symbolically</h3><p>Answers of <code>2*pi/8</code>, <code>pi/4</code> and <code>0.25*pi</code> all match. Three difficulty levels, from core coursework to Putnam-hard.</p></div>
+<div><h3>Streaks and a leaderboard</h3><p>Streaks count posts rather than calendar days, so an outage never breaks anyone’s run.</p></div>
+</div>
+</div></section>
+
+<section id="contact"><div class="wrap">
+<h2>Get in touch.</h2>
+<p class="dim">Questions, bug reports or problems for the bank: <a href="mailto:qed@ezhang.ca">qed@ezhang.ca</a>. Contests and a newsletter of new arXiv papers are next on the roadmap.</p>
+<footer style="border:0;padding:24px 0 0">
+<span>© 2026 QED</span><span><a href="mailto:qed@ezhang.ca">qed@ezhang.ca</a><a href="https://ezhang.ca/QEDlegal">Legal</a></span>
+</footer>
+</div></section>
+</body>
+</html>
